@@ -1,6 +1,6 @@
 import React from "react";
 
-const ContactListItem = ({ contact: { name, number, id} , deleteContact}) => {
+const ContactListItem = ({ contact: { name, number, id }, deleteContact }) => {
   return (
     <li>
       <p>{name}</p>

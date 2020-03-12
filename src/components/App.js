@@ -3,6 +3,7 @@ import ContactForm from "./contactForm/ContactForm";
 import ContactList from "./contactList/ContactList";
 import Filter from "./filter/Filter";
 import css from "./App.module.css";
+import PropTypes from "prop-types";
 
 class App extends Component {
   state = {
@@ -16,9 +17,18 @@ class App extends Component {
   };
 
   submitContact = data => {
-    this.setState(prevState => ({
-      contacts: [...prevState.contacts, data]
-    }));
+    const isNameExist = this.state.contacts.some(
+      contact => contact.name === data.name
+    );
+    !isNameExist
+      ? this.setState(prevState =>
+          data.name
+            ? {
+                contacts: [...prevState.contacts, data]
+              }
+            : alert("empty name")
+        )
+      : alert("This name exist");
   };
 
   deleteContact = e => {
@@ -41,24 +51,41 @@ class App extends Component {
   };
 
   render() {
-    // const { contacts } = this.state;
     return (
       <div className={css.phonebook}>
         <div>
           <h1>Phonebook</h1>
-          {<ContactForm submitContact={this.submitContact} />}
-          <Filter getFilteredContacts={this.getFilteredContacts} />
+          <ContactForm submitContact={this.submitContact} />
+          {this.state.contacts.length > 2 && (
+            <Filter getFilteredContacts={this.getFilteredContacts} />
+          )}
         </div>
         <div>
           <h2>Contacts</h2>
-          <ContactList
-            contacts={this.filterContacts()}
-            deleteContact={this.deleteContact}
-          />
+          {this.state.contacts.length > 2 ? (
+            <ContactList
+              contacts={this.filterContacts()}
+              deleteContact={this.deleteContact}
+            />
+          ) : (
+            <ContactList
+              contacts={this.state.contacts}
+              deleteContact={this.deleteContact}
+            />
+          )}
         </div>
       </div>
     );
   }
 }
+
+App.defaultProps = {
+  contacts: []
+};
+
+App.propTypes = {
+  contacts: PropTypes.array,
+  filter: PropTypes.string
+};
 
 export default App;

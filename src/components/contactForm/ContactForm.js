@@ -32,23 +32,29 @@ class ContactForm extends Component {
       <>
         <form onSubmit={this.handleSubmit}>
           <div>
-            <span>Name</span>
-            <input
-              type="text"
-              name="name"
-              onChange={this.handleChange}
-              value={name}
-            />
+            <label>
+              Name
+              <input
+                placeholder="name..."
+                type="text"
+                name="name"
+                onChange={this.handleChange}
+                value={name}
+              />
+            </label>
           </div>
           <div>
-            <span>Number</span>
-            <input
-              type="tel"
-              // pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-              name="number"
-              onChange={this.handleChange}
-              value={number}
-            />
+            <label>
+              Number
+              <input
+                type="tel"
+                // pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                placeholder="phone number..."
+                name="number"
+                onChange={this.handleChange}
+                value={number}
+              />
+            </label>
           </div>
           <div>
             <button type="submit">ADD</button>
